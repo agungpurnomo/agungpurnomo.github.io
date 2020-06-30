@@ -27,7 +27,18 @@ const getAllTeam = () => {
             const store = tx.objectStore("teams");
             return store.getAll();
         }).then(function(teams) {
-            resolve(teams);
+            if (teams == "") {
+                document.querySelector("#favorite").innerHTML = `
+                <div class="row">
+                    <div class="col s12 m12 center-align">
+                    <div class= "card" style="border:1px solid rgba(0,0,0,.125); padding:10px; border-radius:20px;background-color: mintcream;">  
+                    <h5>Tidak ada tim favorite yang disimpan</h5>
+                    </div>
+                </div>`
+
+            } else {
+                resolve(teams);
+            }
           });
     });
 };
@@ -72,6 +83,7 @@ const deleteTeam = (id)=> {
             html:`Team berhasil dihapus`,
         });
         window.location.href = window.location.href;
+        getAllTeam();
         getTeamSave();
     });
 }
